@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        body {
+            font-family: 'Digital-7', Arial, sans-serif;
+            background-color: #000;
+            color: #00ff00;
+            text-align: center;
+        }
+
+        #time {
+            font-size: 120px;
+            font-weight: bold;
+            margin-top: 50px;
+            text-shadow: 0 0 20px #00ff00;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ff00;
+            display: inline-block;
+        }
+
+        button {
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            background-color: #333;
+            color: #00ff00;
+            margin: 10px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        button:hover {
+            background-color: #444;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        #start {
+            background-color: #004000;
+        }
+
+        #stop {
+            background-color: #400000;
+        }
+
+        #reset {
+            background-color: #404000;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-top: 20px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stopwatch</h1>
+    <div id="time">00:00:00</div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+    <script>
+        let hours = 0;
+        let minutes = 0;
+        let seconds = 0;
+        let intervalId;
+        const timeElement = document.getElementById('time');
+        const startButton = document.getElementById('start');
+        const stopButton = document.getElementById('stop');
+        const resetButton = document.getElementById('reset');
+
+        startButton.addEventListener('click', () => {
+            intervalId = setInterval(() => {
+                seconds++;
+                if (seconds === 60) {
+                    minutes++;
+                    seconds = 0;
+                }
+                if (minutes === 60) {
+                    hours++;
+                    minutes = 0;
+                }
+                timeElement.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+            }, 1000);
+        });
+
+        stopButton.addEventListener('click', () => {
+            clearInterval(intervalId);
+        });
+
+        resetButton.addEventListener('click', () => {
+            clearInterval(intervalId);
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            timeElement.textContent = '00:00:00';
+        });
+
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+    </script>
+</body>
+  </html>
